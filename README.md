@@ -1,10 +1,5 @@
 # paginate - Gorm Pagination
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/morkid/paginate.svg)](https://pkg.go.dev/github.com/morkid/paginate)
-[![Github Actions](https://github.com/morkid/paginate/workflows/Go/badge.svg)](https://github.com/morkid/paginate/actions)
-[![Go Report Card](https://goreportcard.com/badge/github.com/morkid/paginate)](https://goreportcard.com/report/github.com/morkid/paginate)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/morkid/paginate)](https://github.com/morkid/paginate/releases)
-
 Simple way to paginate [Gorm](https://github.com/go-gorm/gorm) result. **paginate** is compatible with [net/http](https://golang.org/pkg/net/http/) and [fasthttp](https://github.com/valyala/fasthttp). This library also supports many net/http or fasthttp based frameworks.
 
 ## Table Of Contents
@@ -42,7 +37,7 @@ Simple way to paginate [Gorm](https://github.com/go-gorm/gorm) result. **paginat
 ## Installation
 
 ```bash
-go get -u github.com/morkid/paginate
+go get -u github.com/mahmut/paginate
 ```
 
 ## Configuration
@@ -214,7 +209,7 @@ example paging, sorting and filtering:
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -240,7 +235,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -263,7 +258,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -289,7 +284,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -313,7 +308,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -337,7 +332,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -361,7 +356,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -384,7 +379,7 @@ func main() {
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -507,7 +502,7 @@ $('#mySelect').select2({
 package main
 
 import (
-    "github.com/morkid/paginate"
+    "github.com/mahmut/paginate"
     ...
 )
 
@@ -979,4 +974,4 @@ type User struct {
 
 ## License
 
-Published under the [MIT License](https://github.com/morkid/paginate/blob/master/LICENSE).
+Published under the [MIT License](https://github.com/mahmut/paginate/blob/master/LICENSE).
