@@ -24,6 +24,7 @@ import (
 type ResponseContext interface {
 	Cache(string) ResponseContext
 	Fields([]string) ResponseContext
+	CountField(string) ResponseContext
 	Response(interface{}) Page
 }
 
@@ -76,6 +77,7 @@ func (r reqContext) Request(req interface{}) ResponseContext {
 	var response ResponseContext = &resContext{
 		Statement:  r.Statement,
 		Request:    req,
+		countField: "*",
 		Pagination: r.Pagination,
 	}
 
@@ -87,11 +89,17 @@ type resContext struct {
 	Statement   *gorm.DB
 	Request     interface{}
 	cachePrefix string
+	countField  string
 	fieldList   []string
 }
 
 func (r *resContext) Cache(prefix string) ResponseContext {
 	r.cachePrefix = prefix
+	return r
+}
+
+func (r *resContext) CountField(countField string) ResponseContext {
+	r.countField = countField
 	return r
 }
 
@@ -192,14 +200,20 @@ func (r resContext) Response(res interface{}) Page {
 		Unscoped().
 		Table("(?) AS s", query)
 
+	countResult := dbs.
+		Unscoped().
+		Table("(?) AS s", query)
+
 	if len(selects) > 0 {
 		result = result.Select(selects)
 	}
 
 	if len(causes.Params) > 0 || len(causes.WhereString) > 0 {
 		result = result.Where(causes.WhereString, causes.Params...)
+		countResult = countResult.Where(causes.WhereString, causes.Params...)
 	}
 
+	countResult.Select(fmt.Sprintf("COUNT(s.%s)", r.countField)).Count(&page.Total)
 	result = result.Count(&page.Total).
 		Limit(int(causes.Limit)).
 		Offset(int(causes.Offset))
@@ -848,14 +862,14 @@ type Page struct {
 	Items        interface{} `json:"items"`
 	Page         int64       `json:"page"`
 	Size         int64       `json:"size"`
-	MaxPage      int64       `json:"max_page"`
-	TotalPages   int64       `json:"total_pages"`
+	MaxPage      int64       `json:"maxPage"`
+	TotalPages   int64       `json:"totalPages"`
 	Total        int64       `json:"total"`
 	Last         bool        `json:"last"`
 	First        bool        `json:"first"`
 	Visible      int64       `json:"visible"`
 	Error        bool        `json:"error,omitempty"`
-	ErrorMessage string      `json:"error_message,omitempty"`
+	ErrorMessage string      `json:"errorMessage,omitempty"`
 	RawError     error       `json:"-"`
 }
 

@@ -55,7 +55,7 @@ var req *http.Request = ...
 
 stmt := db.Where("id > ?", 1).Model(&Article{})
 pg := paginate.New()
-page := pg.With(stmt).Request(req).Response(&[]Article{})
+page := pg.With(stmt).Request(req).CountField("id").Response(&[]Article{})
 
 log.Println(page.Total)
 log.Println(page.Items)
@@ -93,14 +93,14 @@ see more about [customize default configuration](#customize-default-configuratio
     "size": number,    
 
     // Total Pages
-    "total_pages": number,
+    "totalPages": number,
 
     // Max Page
     // start from 0 until last index
     // example: 
     //   if you have 3 pages (page0, page1, page2)
-    //   max_page is 2 not 3
-    "max_page": number,
+    //   maxPage is 2 not 3
+    "maxPage": number,
 
     // Last Page is true if the page 
     // has reached the end of the page
@@ -121,7 +121,7 @@ see more about [customize default configuration](#customize-default-configuratio
     // Error Message
     // current error if available and
     // paginate.Config.ErrorEnabled is true
-    "error_message": string,
+    "errorMessage": string,
 }
 ```
 ## Paginate using http request
@@ -144,8 +144,8 @@ example paging, sorting and filtering:
         ],
         "page": 0, // current selected page
         "size": 10, // current limit or size per page
-        "max_page": 0, // maximum page
-        "total_pages": 1, // total pages
+        "maxPage": 0, // maximum page
+        "totalPages": 1, // total pages
         "total": 1, // total matches including next page
         "visible": 1, // total visible on current page
         "last": true, // if response is first page
@@ -642,7 +642,7 @@ Config             | Type       | Default               | Description
 Operator           | `string`   | `OR`                  | Default conditional operator if no operator specified.<br>For example<br>`GET /user?filters=[["name","like","jo"],["age",">",20]]`,<br>produces<br>`SELECT * FROM user where name like '%jo' OR age > 20`
 FieldWrapper       | `string`   | `LOWER(%s)`           | FieldWrapper for `LIKE` operator *(for postgres default is: `LOWER((%s)::text)`)*
 DefaultSize        | `int64`    | `10`                  | Default size or limit per page
-PageStart          | `int64`    | `0`                   | Set start page, default `0` if not set. `total_pages` , `max_page` and `page` variable will be affected if you set `PageStart` greater than `0` 
+PageStart          | `int64`    | `0`                   | Set start page, default `0` if not set. `totalPages` , `maxPage` and `page` variable will be affected if you set `PageStart` greater than `0` 
 LikeAsIlikeDisabled | `bool`    | `false`               | By default, paginate using Case Insensitive on `LIKE` operator. Instead of using `ILIKE`, you can use `LIKE` operator to find what you want. You can set `LikeAsIlikeDisabled` to `true` if you need this feature to be disabled.
 SmartSearchEnabled | `bool`     | `false`               | Enable smart search *(Experimental feature)*
 CustomParamEnabled | `bool`     | `false`               | Enable custom request parameter
